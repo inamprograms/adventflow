@@ -1,0 +1,819 @@
+You solve Advent of Code problems every day during December. After solving a 
+problem, you want your system to automatically organize everything instead of
+doing it manually. 
+
+The system will be able to fetch the puzzle, help you in
+understanding the puzzle. 
+
+After user solved the puzzle he can paste code, select day, part and it will 
+organize the folder structure by day and year, create code file(part1 & part2 
+separately) and produce a README that includes both the problem explanation 
+(either AI-generated or manually added) and your personal approach to solve puzzle
+optionally will be written by only user will be added to README.md of each day.
+It will also maintain a parent README.md file which will overall information about the 
+Advent of code, links to problems solved code in github, link to question etc.
+
+Taking the above information It will automatically publish results to 
+GitHub: creating commits, pushing daily changes, tagging versions.
+
+User can also generate social-sharing content/Post using the information
+so that after completing a puzzle, user can instantly post about it on 
+Twitter/LinkedIn/etc.
+
+This is my home
+
+import { useNavigate } from "react-router-dom";
+import SectionHeading from "../components/SectionHeading";
+import ButtonGlow from "../components/ButtonGlow";
+import SocialIcons from "../components/SocialIcons";
+import RightPanel from "../components/RightPanel";
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 lg:px-8 py-4 gap-6 bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white">
+
+      <div className="flex-1 space-y-4 lg:space-y-6 max-w-lg">
+        <SectionHeading>
+          Advent Flow - 
+             <br /> Organize, Track & Share Your Advent of Code Journey
+
+        </SectionHeading>
+
+        <p className="text-subtle text-lg">
+          Keep all your Advent of Code solutions organized automatically. 
+          Generate daily code files, README explanations, and GitHub updates 
+          with ease. Share your progress on social media instantly.
+        </p>
+
+        <div className="flex gap-3 mt-3">
+          <ButtonGlow onClick={() => navigate("/dashboard")}>Start Creating →</ButtonGlow>
+          <ButtonGlow>Explore Features</ButtonGlow>
+        </div>
+
+        <div className="pt-4">
+          <SocialIcons />
+        </div>
+      </div>
+
+      <div className="frosted-light rounded-3xl p-8 md:p-10 shadow-[0_10px_25px_rgba(0,0,0,0.35)] animate-float">
+        <RightPanel />
+      </div>
+
+    </div>
+  );
+};
+
+export default Home;
+
+This is my main layout
+
+import type { FC, ReactNode } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+interface Props {
+  children: ReactNode;
+}
+
+const MainLayout: FC<Props> = ({ children }) => {
+  return (
+    <div className="page-bg">
+
+      <div className="absolute inset-0 bg-noise opacity-[0.06] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0b1220]/40 to-[#0b1220] pointer-events-none"></div>
+    
+      <Header />
+
+      <main className="relative z-10 container-xl px-4 md:px-8 py-6">
+        {children}
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default MainLayout;
+
+
+This is my Header
+import type { FC } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Header: FC = () => {
+  const navigate = useNavigate();
+  const navItems = ["Home", "Create Project", "Solutions", "Publish", "Settings"];
+                     
+  return (
+    <header className="w-full flex justify-center">
+      <div className="container-xl frosted-dark px-8 py-3 rounded-t-2xl shadow-top flex items-center justify-between">
+
+        <div
+          className="text-white text-2xl font-bold cursor-pointer hover:text-cyan-400 transition"
+          onClick={() => navigate("/")}
+        >
+          Advent Flow
+        </div>
+
+        <nav className="flex gap-6">
+          {navItems.map((item) => (
+            <div
+              key={item}
+              className="nav-item"
+              onClick={() => item === "Home" && navigate("/")}
+            >
+              {item}
+            </div>
+          ))}
+        </nav>
+
+      </div>
+    </header>
+  );
+};
+
+export default Header;
+
+Thisi is my Footer
+
+import type { FC } from "react";
+
+const Footer: FC = () => {
+  return (
+    <footer className="w-full flex justify-center">
+      <div className="container-xl frosted-dark px-8 py-6 rounded-t-2xl shadow-bottom flex flex-col lg:flex-row items-center justify-between">
+
+        <div className="text-subtle text-sm">
+          © 2025 Advent Flow. All rights reserved.
+        </div>
+
+        <div className="text-subtle text-sm text-center">
+          Built with <span className="text-red-500">❤️</span> by Inam 
+        </div>
+
+        <div className="flex gap-4 mt-4 lg:mt-0">
+          <a href="#" className="hover:text-cyan-300 transition">Privacy</a>
+          <a href="#" className="hover:text-cyan-300 transition">Terms</a>
+          <a href="#" className="hover:text-cyan-300 transition">Contact</a>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+
+___________________________________________________________________________________
+
+
+SEction tabs:
+
+import type { FC } from "react";
+
+interface Props {
+  active: string;
+  onChange: (val: string) => void;
+}
+
+const sections = [
+  { id: "puzzle", label: "Puzzle" },
+  { id: "solution", label: "Solution" },
+  { id: "generate", label: "Generate" },
+];
+
+const SectionTabs: FC<Props> = ({ active, onChange }) => {
+  return (
+    <div className="flex gap-6 border-b border-white/10 pb-3">
+      {sections.map((sec) => (
+        <button
+          key={sec.id}
+          onClick={() => onChange(sec.id)}
+          className={`pb-2 transition ${
+            active === sec.id
+              ? "text-cyan-300 border-b-2 border-cyan-300"
+              : "text-subtle hover:text-cyan-200"
+          }`}
+        >
+          {sec.label}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default SectionTabs;
+
+
+PuzzleSEction
+
+import { useState } from "react";
+import SectionHeading from "../SectionHeading";
+import ButtonGlow from "../ButtonGlow";
+import MarkdownViewer from "./MarkdownViewer";
+import YearDaySelector from "./YearDaySelector";
+
+const PuzzleSection = () => {
+  const [year, setYear] = useState("");
+  const [day, setDay] = useState("");
+  const [puzzleText, setPuzzleText] = useState("");
+  const [explanation, setExplanation] = useState("");
+
+  return (
+    <div className="space-y-6">
+
+      <SectionHeading>Fetch & Understand Puzzle</SectionHeading>
+
+      {/* Year + Day */}
+      <YearDaySelector
+        year={year}
+        day={day}
+        setYear={setYear}
+        setDay={setDay}
+      />
+
+      {/* Fetch Puzzle Button */}
+      <ButtonGlow onClick={() => {/* backend later */}}>
+        Fetch Puzzle
+      </ButtonGlow>
+
+      {/* Puzzle Content Viewer */}
+      <MarkdownViewer content={puzzleText} />
+
+      {/* Explain Puzzle */}
+      <div className="pt-2">
+        <ButtonGlow onClick={() => {/* backend later */}}>
+          Explain Puzzle
+        </ButtonGlow>
+      </div>
+
+      {/* Explanation Viewer */}
+      {explanation && (
+        <div className="bg-[#1c2333]/40 border border-white/10 rounded-xl p-4">
+          <h3 className="text-cyan-300 mb-2 font-semibold">Explanation</h3>
+          <MarkdownViewer content={explanation} />
+        </div>
+      )}
+
+    </div>
+  );
+};
+
+export default PuzzleSection;
+
+
+// src/components/workspace/SolutionSection.tsx
+import { useState } from "react";
+import SectionHeading from "../SectionHeading";
+import SolutionUploader from "./SolutionUploader";
+import FolderPreview from "./FolderPreview";
+import ReadmePreview from "./ReadmePreview";
+import SocialPostEditor from "./SocialPostEditor"; // new component
+
+export default function SolutionSection() {
+  const [payload, setPayload] = useState<any | null>(null);
+  const [showSocial, setShowSocial] = useState(false);
+
+  const handleGeneratePost = (data: any) => {
+    setPayload(data);
+    setShowSocial(true);
+  };
+
+  return (
+    <div className="space-y-6">
+      <SectionHeading>Generate — Solution & Share</SectionHeading>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Left column: Uploader */}
+        <div className="space-y-4">
+          <SolutionUploader
+            initialYear={String(new Date().getFullYear())}
+            onPreview={setPayload}
+            onGeneratePost={handleGeneratePost} // new callback
+          />
+        </div>
+
+        {/* Right column: Preview */}
+        <div className="space-y-4">
+          <FolderPreview payload={payload} />
+          <ReadmePreview payload={payload} />
+        </div>
+      </div>
+
+      {/* Social Post Section */}
+      {showSocial && payload && (
+        <div className="mt-6">
+          <SocialPostEditor payload={payload} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+SolutionsSection
+
+// src/components/workspace/SolutionSection.tsx
+import { useState } from "react";
+import SectionHeading from "../SectionHeading";
+import SolutionUploader from "./SolutionUploader";
+import FolderPreview from "./FolderPreview";
+import ReadmePreview from "./ReadmePreview";
+import SocialPostEditor from "./SocialPostEditor"; // new component
+
+export default function SolutionSection() {
+  const [payload, setPayload] = useState<any | null>(null);
+  const [showSocial, setShowSocial] = useState(false);
+
+  const handleGeneratePost = (data: any) => {
+    setPayload(data);
+    setShowSocial(true);
+  };
+
+  return (
+    <div className="space-y-6">
+      <SectionHeading>Generate — Solution & Share</SectionHeading>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Left column: Uploader */}
+        <div className="space-y-4">
+          <SolutionUploader
+            initialYear={String(new Date().getFullYear())}
+            onPreview={setPayload}
+            onGeneratePost={handleGeneratePost} // new callback
+          />
+        </div>
+
+        {/* Right column: Preview */}
+        <div className="space-y-4">
+          <FolderPreview payload={payload} />
+          <ReadmePreview payload={payload} />
+        </div>
+      </div>
+
+      {/* Social Post Section */}
+      {showSocial && payload && (
+        <div className="mt-6">
+          <SocialPostEditor payload={payload} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+Folder preview
+// src/components/workspace/FolderPreview.tsx
+export default function FolderPreview({ payload }: { payload: any | null }) {
+  if (!payload || !payload.year || !payload.day) {
+    return <div className="text-subtle">Folder preview will appear after preview.</div>;
+  }
+
+  const dayNum = String(payload.day).padStart(2, "0");
+  const folder = `${payload.year}/day${dayNum}`;
+
+  const extMap: Record<string, string> = {
+    python: ".py",
+    javascript: ".js",
+    typescript: ".ts",
+    cpp: ".cpp",
+    rust: ".rs",
+    go: ".go",
+  };
+
+  const ext = extMap[payload.language] ?? ".txt";
+
+  return (
+    <div className="bg-[#0f172a]/40 border border-white/10 rounded-xl p-4">
+      <div className="text-sm text-subtle mb-3">Folder structure</div>
+      <div className="font-mono text-sm text-white">
+        <div>{folder}/</div>
+        <div className="pl-4">part{payload.part}{ext}</div>
+        {payload.notes && <div className="pl-4">NOTES_part{payload.part}.md</div>}
+        <div className="pl-4">README.md</div>
+      </div>
+    </div>
+  );
+}
+
+
+
+Markdown viewer
+
+import ReactMarkdown from "react-markdown";
+
+const MarkdownViewer = ({ content }: { content: string }) => {
+  return (
+    <div className="bg-[#0f172a]/50 border border-white/10 rounded-xl p-4 text-sm leading-6">
+      {content ? (
+        <ReactMarkdown>{content}</ReactMarkdown>
+      ) : (
+        <p className="text-subtle">Puzzle content will appear here after fetching.</p>
+      )}
+    </div>
+  );
+};
+
+export default MarkdownViewer;
+
+
+Readme preview
+
+// src/components/workspace/ReadmePreview.tsx
+import MarkdownViewer from "./MarkdownViewer";
+
+export default function ReadmePreview({ payload }: { payload: any | null }) {
+  if (!payload || !payload.year || !payload.day) {
+    return <div className="text-subtle">README preview will appear after preview.</div>;
+  }
+
+  const generatedREADME = `# Day ${payload.day} — Solution (${payload.language})
+  
+**Part:** ${payload.part}  
+**Language:** ${payload.language}  
+
+## Problem
+*(Problem statement will be fetched from AoC — placeholder here.)*
+
+## Explanation
+*(AI explanation / manual explanation will appear here.)*
+
+## My approach
+${payload.notes || "_No notes provided._"}
+
+## Files
+- part${payload.part}.${payload.language}
+`;
+
+  return (
+    <div>
+      <div className="text-subtle text-sm mb-2">README Preview</div>
+      <div className="bg-[#0f172a]/50 border border-white/10 rounded-xl p-4">
+        <MarkdownViewer content={generatedREADME} />
+      </div>
+    </div>
+  );
+}
+
+Social post editor
+
+// src/components/workspace/SocialPostEditor.tsx
+export default function SocialPostEditor({ payload }: { payload: any }) {
+  if (!payload) return null;
+
+  const { year, day, part, language, notes } = payload;
+
+  const defaultPost = `I just solved Day ${day} Part ${part} of Advent of Code ${year} using ${language}! Here's my approach:\n${notes || "_No notes provided_"}`;
+
+  return (
+    <div className="space-y-4">
+      <div className="text-subtle text-sm mb-2">Social Post Preview</div>
+      <textarea
+        className="w-full min-h-[120px] p-3 rounded-xl bg-[#0f172a]/50 border border-white/10 text-white"
+        defaultValue={defaultPost}
+      />
+      <div className="flex gap-3">
+        <button className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-black font-bold">
+          Copy Post
+        </button>
+      </div>
+    </div>
+  );
+}
+
+solution uploader
+
+// src/components/workspace/SolutionUploader.tsx
+import { useState } from "react";
+import YearDaySelector from "./YearDaySelector";
+import ButtonGlow from "../ButtonGlow";
+
+interface Payload {
+  year: string;
+  day: string;
+  part: string;
+  language: string;
+  code: string;
+  notes: string;
+}
+
+export default function SolutionUploader({
+  initialYear = "",
+  onPreview,
+  onGeneratePost,
+
+}: {
+  initialYear?: string;
+  onPreview: (payload: Payload) => void;
+  onGeneratePost?: (payload: Payload) => void;
+
+}) {
+  const [year, setYear] = useState(initialYear);
+  const [day, setDay] = useState("");
+  const [part, setPart] = useState("1");
+  const [language, setLanguage] = useState("python");
+  const [code, setCode] = useState("");
+  const [notes, setNotes] = useState("");
+
+  return (
+    <div className="space-y-4">
+      <div className="grid md:grid-cols-2 gap-4">
+        <YearDaySelector year={year} day={day} setYear={setYear} setDay={setDay} />
+
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <label className="text-subtle text-sm">Part</label>
+            <select
+              value={part}
+              onChange={(e) => setPart(e.target.value)}
+              className="w-full rounded-xl px-3 py-2 bg-[#1c2333]/60 border border-white/10 text-white"
+            >
+              <option value="1">Part 1</option>
+              <option value="2">Part 2</option>
+            </select>
+          </div>
+
+          <div className="flex-1">
+            <label className="text-subtle text-sm">Language</label>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="w-full rounded-xl px-3 py-2 bg-[#1c2333]/60 border border-white/10 text-white"
+            >
+              <option value="python">Python</option>
+              <option value="javascript">JavaScript</option>
+              <option value="typescript">TypeScript</option>
+              <option value="cpp">C++</option>
+              <option value="rust">Rust</option>
+              <option value="go">Go</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="text-subtle text-sm">Paste Solution Code</label>
+        <textarea
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="Paste your solution here..."
+          className="w-full min-h-[160px] rounded-xl p-3 bg-[#0f172a]/50 border border-white/10 text-white font-mono text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-subtle text-sm">Your Notes (optional)</label>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Add your approach, optimizations, or anything to appear in day README"
+          className="w-full min-h-[80px] rounded-xl p-3 bg-[#0f172a]/50 border border-white/10 text-white text-sm"
+        />
+      </div>
+
+      <div className="flex gap-3">
+        <ButtonGlow
+          onClick={() =>
+            onPreview({
+              year,
+              day,
+              part,
+              language,
+              code,
+              notes,
+            })
+          }
+        >
+          Preview Files
+        </ButtonGlow>
+
+        <ButtonGlow onClick={() => {
+          // placeholder - actual publish button will be wired later
+          const payload = { year, day, part, language, code, notes };
+          console.log("Would generate:", payload);
+        }}>
+          Generate (disabled - backend)
+        </ButtonGlow>
+
+        <ButtonGlow
+          onClick={() =>
+            onGeneratePost && onGeneratePost({ year, day, part, language, code, notes })
+          }>
+          Generate Post
+        </ButtonGlow>
+      </div>
+    </div>
+  );
+}
+
+Day year selector
+
+import type { FC } from "react";
+
+interface Props {
+  year: string;
+  day: string;
+  setYear: (y: string) => void;
+  setDay: (d: string) => void;
+}
+
+const YearDaySelector: FC<Props> = ({ year, day, setYear, setDay }) => {
+  const years = Array.from({ length: 15 }, (_, i) => 2010 + i).reverse();
+  const days = Array.from({ length: 25 }, (_, i) => i + 1);
+
+  return (
+    <div className="flex gap-4">
+
+      {/* Year dropdown */}
+      <select
+        value={year}
+        onChange={(e) => setYear(e.target.value)}
+        className="bg-[#1c2333]/60 backdrop-blur-xl border border-white/10 rounded-xl px-4 py-2 text-white"
+      >
+        <option value="">Year</option>
+        {years.map((y) => (
+          <option key={y} value={y}>{y}</option>
+        ))}
+      </select>
+
+      {/* Day dropdown */}
+      <select
+        value={day}
+        onChange={(e) => setDay(e.target.value)}
+        className="bg-[#1c2333]/60 backdrop-blur-xl border border-white/10 rounded-xl px-4 py-2 text-white"
+      >
+        <option value="">Day</option>
+        {days.map((d) => (
+          <option key={d} value={d}>Day {d}</option>
+        ))}
+      </select>
+      
+    </div>
+  );
+};
+
+export default YearDaySelector;
+
+This is design i had and idea.
+In the puzzle tab backend done as well. let me provide you backend files as well. Note do not worry if above code contains not forntend integration as it is not updated but you can assume its done for puzzle and all associated file. 
+In root ther backend folder.
+backend folder contains
+agents, core, services folders and main.py file 
+And in src folder new folder created api.
+
+Now in agents two files:
+explain puzzle agent
+
+from langgraph.graph import StateGraph
+from core.llm import create_llm_agent
+
+# Define the state structure
+class ExplainState(dict):
+    puzzle_text: str
+    explanation: str
+
+# Node function
+def explain_node(state: ExplainState):
+    agent = create_llm_agent(tools=[])  # empty tools for now
+    text = state.get("puzzle_text", "")
+
+    # Invoke agent with proper structured message
+    result = agent.invoke({
+        "messages": [
+            {
+                "role": "user",
+                "content": f"Explain this Advent of Code puzzle in simple terms:\n\n{text}"
+            }
+        ]
+    })
+    # Extract output
+    messages = result.get("messages", [])
+    if len(messages) > 1:
+        explanation =  messages[1].content
+    else:
+        explanation = "No explanation generated."
+    state["explanation"] = explanation
+    return state
+
+# Build graph
+def build_explain_graph():
+    graph = StateGraph(ExplainState)
+    graph.add_node("explain", explain_node)
+    graph.set_entry_point("explain")
+    return graph.compile()
+
+
+fetch puzzle agent
+
+from services.puzzle_scraper import fetch_puzzle
+from langgraph.graph import StateGraph
+
+class FetchState(dict):
+    year: str
+    day: str
+    puzzle_text: str
+
+def fetch_node(state: FetchState):
+    year = state["year"]
+    day = state["day"]
+    text = fetch_puzzle(year, day)
+    state["puzzle_text"] = text
+    return state
+
+def build_fetch_graph():
+    graph = StateGraph(FetchState)
+    graph.add_node("fetch", fetch_node)
+    graph.set_entry_point("fetch")
+    return graph.compile()
+
+core folder contains 
+
+config.py
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Settings:
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+settings = Settings()
+
+llm.py
+
+from langgraph.prebuilt import create_react_agent
+from langchain_groq import ChatGroq
+from core.config import settings
+
+def get_llm():
+    """Return a ChatGroq LLM instance using your API key."""
+    return ChatGroq(
+        api_key=settings.GROQ_API_KEY,  # your Groq API key from env
+        model="llama-3.1-8b-instant"    # model chosen
+    )
+
+def create_llm_agent(tools=[]):
+    """
+    Create a ReAct agent with the LLM and optional tools.
+    Tools should be a list of callable functions the agent can use.
+    """
+    llm = get_llm()
+    return create_react_agent(
+        model=llm,          # pass the LLM instance directly
+        tools=tools,
+        prompt="You are a helpful assistant for explaining Advent of Code puzzles."
+    )
+
+
+Sevrices folder contains puzzle scrapper
+
+import requests
+from bs4 import BeautifulSoup
+
+def fetch_puzzle(year: str, day: str) -> str:
+    url = f"https://adventofcode.com/{year}/day/{day}"
+
+    res = requests.get(url)
+    res.raise_for_status()
+
+    soup = BeautifulSoup(res.text, "html.parser")
+    article = soup.select_one("article.day-desc")
+
+    if not article:
+        return "No puzzle found."
+
+    # Convert <article> HTML → clean Markdown-like text
+    text = article.get_text("\n")
+    return text.strip()
+
+
+api folder in src folder contains aocAPI.ts
+
+import axios from "axios";
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+export const fetchPuzzle = async (year: string, day: string): Promise<any> => {
+  const res = await axios.get(`${API_BASE}/puzzle/fetch`, {
+    params: { year, day },
+  });
+  return res.data;
+};
+
+export const explainPuzzle = async (puzzleText: string): Promise<any> => {
+  const res = await axios.post(`${API_BASE}/puzzle/explain`, {
+    puzzle: puzzleText,
+  });
+  return res.data;
+};
+
+
+
+
+
+
+
+
+

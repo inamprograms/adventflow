@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic-settings
+requests
+langgraph
+beautifulsoup4
+langchain-groq
+supabase

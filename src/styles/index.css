@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Noise background */
+.bg-noise {
+  background-image: url('/src/assets/bg-noise.png');
+  background-repeat: repeat;
+}
+
+/* Float animation for depth */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   GLOBAL REUSABLE CLASSES CREATED FROM YOUR COMPONENTS
+   ===================================================== */
+
+/* Main max container width */
+.container-xl {
+  @apply w-full max-w-[1400px] mx-auto;
+}
+
+/* Frosted dark panel background */
+.frosted-dark {
+  @apply bg-[#0f172a]/70 backdrop-blur-xl;
+}
+
+/* Glass light panel */
+.frosted-light {
+  @apply bg-[#1c2333]/40 backdrop-blur-xl border border-white/10;
+}
+
+/* Navigation item */
+.nav-item {
+  @apply text-[#8ea8c3] hover:text-cyan-300 font-medium cursor-pointer transition;
+}
+
+/* Section paragraph text */
+.text-subtle {
+  @apply text-[#8ea8c3];
+}
+
+/* Page background */
+.page-bg {
+  @apply min-h-screen bg-[#0b1220] text-white relative overflow-hidden;
+}
+
+/* Shared shadow for top or bottom panels */
+.shadow-top {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.shadow-bottom {
+  box-shadow: 0 -8px 20px rgba(0,0,0,0.25);
+}
