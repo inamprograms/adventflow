@@ -60,7 +60,7 @@ export default function SolutionSection() {
       const user = userData?.user;
       if (!user) return;
 
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("profiles")
         .select("selected_repo")
         .eq("id", user.id)

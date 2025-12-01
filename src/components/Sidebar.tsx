@@ -2,7 +2,7 @@ import type { FC } from "react";
 import folderIcon from "../assets/icons/folder.svg";
 import aiIcon from "../assets/icons/ai.svg";
 import githubIcon from "../assets/icons/github.svg";
-import socialIcon from "..//assets/icons/social.svg";
+// import socialIcon from "..//assets/icons/social.svg";
 import logIcon from "../assets/icons/log.svg";
 
 const Sidebar: FC = () => {
