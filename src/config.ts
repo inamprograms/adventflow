@@ -3,5 +3,5 @@ export const config = {
   apiBaseUrl: import.meta.env.VITE_API_URL || "http://localhost:8000",
   supabaseUrl: import.meta.env.VITE_SUPABASE_URL || "",
   supabaseAnonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || "",
-  AFUrl: import.meta.env.VITE_AF_URL || "http://localhost:5173",
+  AFUrl: import.meta.env.VITE_AF_URL,
 };
