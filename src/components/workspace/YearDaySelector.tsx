@@ -8,7 +8,7 @@ interface Props {
 }
 
 const YearDaySelector: FC<Props> = ({ year, day, setYear, setDay }) => {
-  const years = Array.from({ length: 15 }, (_, i) => 2010 + i).reverse();
+  const years = Array.from({ length: 11 }, (_, i) => 2015 + i).reverse();
   const days = Array.from({ length: 25 }, (_, i) => i + 1);
 
   return (
