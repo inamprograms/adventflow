@@ -11,7 +11,7 @@ const RightPanel = () => {
     >
       {/* Top Icons Row */}
       <div className="flex justify-between items-center mb-8">
-        <div className="text-lg text-cyan-300">🔥 Insights - highlights Advent Flow features like "AI Automation Hub</div>
+        <div className="text-lg text-cyan-300"> AdventFlow - AI Powered Automation Toolkit </div>
         <div className="flex gap-2">
           <div className="w-2 h-2 bg-cyan-300 rounded-full"></div>
           <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
@@ -21,23 +21,23 @@ const RightPanel = () => {
       {/* Insight Grid */}
       <div className="grid grid-cols-2 gap-4 mb-8">
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <div className="text-cyan-300">Tone</div>
-          <div className="text-sm text-[#8ea8c3]">Reflective</div>
+          <div className="text-cyan-300">Fetch & Summarize</div>
+          <div className="text-sm text-[#8ea8c3]">Auto fetch and summarize puzzles</div>
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <div className="text-cyan-300">Pacing</div>
-          <div className="text-sm text-[#8ea8c3]">Steady</div>
+          <div className="text-cyan-300">Organize Files</div>
+          <div className="text-sm text-[#8ea8c3]">Auto-create structured solution files</div>
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <div className="text-cyan-300">Structure</div>
-          <div className="text-sm text-[#8ea8c3]">Balanced</div>
+          <div className="text-cyan-300">Instant Repo Sync</div>
+          <div className="text-sm text-[#8ea8c3]">Instant Auto-publish solutions</div>
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <div className="text-cyan-300">Viewpoint</div>
-          <div className="text-sm text-[#8ea8c3]">Close Third</div>
+          <div className="text-cyan-300">Generate Shareable Posts</div>
+          <div className="text-sm text-[#8ea8c3]">Generate ready to share posts</div>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ const RightPanel = () => {
       <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
         <div className="text-cyan-300 mb-2">Featured Content</div>
         <p className="text-sm text-[#8ea8c3] leading-relaxed">
-          Let’s craft a striking homepage interface that embodies the essence of your brand.
+          AdventFlow never solves puzzles | <span className="text-cyan-300 font-semibold">Understand - Organize - Generate</span>
         </p>
       </div>
     </div>

@@ -13,14 +13,17 @@ const Home = () => {
       <div className="flex-1 space-y-4 lg:space-y-6 max-w-lg">
         <SectionHeading>
           Advent Flow - 
-             <br /> Organize, Track & Share Your Advent of Code Journey
+             <br /> 
+             Stay Organized, Share Instantly, Save time
 
         </SectionHeading>
 
         <p className="text-subtle text-lg">
-          Keep all your Advent of Code solutions organized automatically. 
-          Generate daily code files, README explanations, and GitHub updates 
-          with ease. Share your progress on social media instantly.
+          Solving Advent of Code puzzles is fun, but managing code, READMEs, GitHub, 
+          and social posts can be time consuming. AdventFlow organizes your solutions,
+          updates GitHub automatically, and helps you generate ready to share posts
+          so you can focus on solving puzzles while keeping everything structured 
+          and shareable.
         </p>
 
         <div className="flex gap-3 mt-3">
