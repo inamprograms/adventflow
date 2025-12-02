@@ -1,11 +1,12 @@
 import { supabase } from "../lib/supabaseClient";
 import { showError } from "../components/ui/toast";
+import { config } from "../config";
 
 export async function loginWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: "http://localhost:5173/auth/callback",
+      redirectTo: `${config.AFUrl}/auth/callback`,
       scopes: "repo user:email",
     }
   });
